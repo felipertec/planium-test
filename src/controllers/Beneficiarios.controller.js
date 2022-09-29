@@ -1,4 +1,4 @@
-const beneficiarios = require('../models/Beneficiarios.model');
+const { addBeneficiario, getAllBeneficiarios } = require('../models/Beneficiarios.model');
 
 const getAllPlanos = async (req,res)=>{
     return await res.status(200).json(beneficiarios.planos);
@@ -7,11 +7,11 @@ const getAllPlanos = async (req,res)=>{
 const getAllPrecos = async (req,res)=>{
     return await res.status(200).json(beneficiarios.precos);
 }
-const getAllBeneficiarios = async (req,res)=>{
-    return await res.status(200).json(beneficiarios.beneficiario);
+const httpGetAllBeneficiarios = async (req,res)=>{
+    return await res.status(200).json(getAllBeneficiarios());
 }
 
-const postBeneficiario =  (req,res)=>{
+const httpPostBeneficiario =  (req,res)=>{
     const novoBeneficiario = req.body;
     
     if(!novoBeneficiario.quantidadeBeneficiario){
@@ -20,7 +20,7 @@ const postBeneficiario =  (req,res)=>{
         })
     }
 
-    beneficiarios.beneficiario.push(novoBeneficiario);
+    addBeneficiario(novoBeneficiario);
     return res.status(201).json(novoBeneficiario);
 }
 
@@ -28,6 +28,6 @@ const postBeneficiario =  (req,res)=>{
 module.exports = {
     getAllPlanos,
     getAllPrecos,
-    getAllBeneficiarios,
-    postBeneficiario
+    httpGetAllBeneficiarios,
+    httpPostBeneficiario
 };
