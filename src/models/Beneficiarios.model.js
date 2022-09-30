@@ -1,30 +1,66 @@
 const planos = require('../db/plans.json');
 const precos = require('../db/prices.json');
+const jsonBeneficiarios = require('../db/beneficiarios.json')
+
+const fs = require('fs');
 
 const beneficiarios = [];
-const beneficiario = {"quantidadeBeneficiarios": 2, "nomeBenificiario":['Felipe','Maria'], "idadeBeneficiarios":[29,68], "registroPlano":"reg6"};
-beneficiarios.push(beneficiario);
 
-const planosPrecos = ()=>{
-    let novoPlano = beneficiarios.length - 1;
-    const precoEscolhido = [];
-    for(let i = 0; i<beneficiarios[novoPlano].idadeBeneficiarios.length; i++){   
-        if(beneficiarios[novoPlano].idadeBeneficiarios[i] <= 17){
-             precoEscolhido.push(precos[0].faixa1)
-        }else if(beneficiarios[novoPlano].idadeBeneficiarios[i] >= 18 && beneficiarios[novoPlano].idadeBeneficiarios[i] <= 40){
-             precoEscolhido.push(precos[0].faixa2)
-        }else{
-             precoEscolhido.push(precos[0].faixa3)
+const beneficiario = { 
+    "nomeBenificiario":'Felipe', 
+    "idadeBeneficiarios":29, 
+    "registroPlano":1
+};
+
+beneficiarios.push(beneficiario);
+    
+function criarBeneficiarioJson(){
+    var jsonContent = JSON.stringify(beneficiarios);
+    fs.writeFile("./src/db/beneficiarios.json", jsonContent, 'utf8',function(err){
+        if(err){
+            console.log("Error ao tentar escrever o arquivo json");
+            return console.log(err);
         }
-    }
-     return precoEscolhido;
+        console.log("Arquivo Json Criado com sucesso!");
+    })
 }
+
+       var encontrarPlano = jsonBeneficiarios.map((cliente,indice) =>{
+            for(indice in planos){
+                if(planos[indice].codigo === cliente.registroPlano){
+                 return cliente.plano = planos[indice].nome
+                }
+            }
+
+            let precoEncontrado;
+    
+            for(precos in indice){
+                if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas === 1){
+                    precoEncontrado = precos[indice];
+                }else if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas > 1){
+                    precoEncontrado = precos[indice]
+                }
+            }
+    
+            if(cliente.idadeBeneficiarios <= 17){
+                cliente.preco = precoEncontrado.faixa1
+            }else if(cliente.idadeBeneficiarios >= 18 && cliente.idadeBeneficiarios <= 40){
+                cliente.preco = precoEncontrado.faixa2
+            }else{
+                cliente.preco = precoEncontrado.faixa3
+            }
+            
+        })
+        
+        
+    
+
 
 
 const propostas = [];
 
 
-const proposta = Object.assign(beneficiario,{"minimum_vidas": 2, "plano_escolhido_preco":planosPrecos()});
+const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano});
 propostas.push(proposta)
 
 
@@ -47,7 +83,9 @@ function addProposta(proposta){
 module.exports = {
     planos,
     precos,
+    jsonBeneficiarios,
     getAllBeneficiarios,
     addBeneficiario,
+    criarBeneficiarioJson,
     addProposta
 };
