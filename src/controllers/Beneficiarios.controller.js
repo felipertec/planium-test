@@ -25,8 +25,8 @@ const httpPostBeneficiario =  (req,res)=>{
     
 
     addBeneficiario(novoBeneficiario);
+    addProposta(addBeneficiario(novoBeneficiario));
     criarBeneficiarioJson();
-    addProposta();
     criarPropostaJson();
     return res.status(201).json(novoBeneficiario);
 }

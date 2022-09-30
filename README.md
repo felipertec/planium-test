@@ -45,3 +45,15 @@
 
 
 **Good luck and have fun :)**
+
+para iniciar o sistema
+usar o comando abaixo ira instalar todas as dependencias do projeto:
+  - npm install
+
+após isso usar o comando abaixo para rodar o sistema em modo de produção;
+  - npm start
+
+OBS: Usar um sistema para fazer o "post" como postman no link abaixo:
+  -  https://localhost:8000/
+
+  

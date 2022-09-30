@@ -50,7 +50,8 @@ function criarBeneficiarioJson(){
 
 
 const propostas = [];
-
+const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano},{encontrarPreco});
+propostas.push(proposta)
 
 function criarPropostaJson(){
     let jsonContent2 = JSON.stringify(propostas);
@@ -73,8 +74,8 @@ function addBeneficiario(beneficiario){
     return beneficiarios.push(beneficiario);
 }
 
-function addProposta(){
-    const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano},{encontrarPreco});
+function addProposta(novo){
+    const proposta = Object.assign(novo,{encontrarPlano},{encontrarPreco});
     return propostas.push(proposta)
 }
 
