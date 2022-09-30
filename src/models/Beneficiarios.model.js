@@ -32,26 +32,39 @@ function criarBeneficiarioJson(){
                 }
             }
 
-            let precoEncontrado;
+            // let precoEncontrado;
     
-            for(precos in indice){
-                if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas === 1){
-                    precoEncontrado = precos[indice];
-                }else if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas > 1){
-                    precoEncontrado = precos[indice]
-                }
-            }
+            // for(precos in indice){
+            //     if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas === 1){
+            //         precoEncontrado = precos[indice];
+            //     }else if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas > 1){
+            //         precoEncontrado = precos[indice]
+            //     }
+            // }
     
-            if(cliente.idadeBeneficiarios <= 17){
-                cliente.preco = precoEncontrado.faixa1
-            }else if(cliente.idadeBeneficiarios >= 18 && cliente.idadeBeneficiarios <= 40){
-                cliente.preco = precoEncontrado.faixa2
-            }else{
-                cliente.preco = precoEncontrado.faixa3
-            }
+            // if(cliente.idadeBeneficiarios <= 17){
+            //     cliente.preco = precoEncontrado.faixa1
+            // }else if(cliente.idadeBeneficiarios >= 18 && cliente.idadeBeneficiarios <= 40){
+            //     cliente.preco = precoEncontrado.faixa2
+            // }else{
+            //     cliente.preco = precoEncontrado.faixa3
+            // }
             
         })
         
+        var encontrarPreco = jsonBeneficiarios.map((cliente,indice)=>{
+            for(indice in precos){
+                if(cliente.registroPlano === precos[indice].codigo){
+                    if(cliente.idadeBeneficiarios <= 17){
+                        return cliente.preco = precos[indice].faixa1
+                    }else if(cliente.idadeBeneficiarios >= 18 && cliente.idadeBeneficiarios <= 40){
+                        return cliente.preco = precos[indice].faixa2
+                    }else{
+                        return cliente.preco = precos[indice].faixa3
+                    }
+                }
+            }
+        })
         
     
 
@@ -60,7 +73,7 @@ function criarBeneficiarioJson(){
 const propostas = [];
 
 
-const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano});
+const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano},{encontrarPreco});
 propostas.push(proposta)
 
 
