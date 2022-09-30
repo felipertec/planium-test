@@ -15,7 +15,7 @@ const beneficiario = {
 beneficiarios.push(beneficiario);
     
 function criarBeneficiarioJson(){
-    var jsonContent = JSON.stringify(beneficiarios);
+    let jsonContent = JSON.stringify(beneficiarios);
     fs.writeFile("./src/db/beneficiarios.json", jsonContent, 'utf8',function(err){
         if(err){
             console.log("Error ao tentar escrever o arquivo json");
@@ -31,25 +31,6 @@ function criarBeneficiarioJson(){
                  return cliente.plano = planos[indice].nome
                 }
             }
-
-            // let precoEncontrado;
-    
-            // for(precos in indice){
-            //     if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas === 1){
-            //         precoEncontrado = precos[indice];
-            //     }else if(planos[indice].codigo === cliente.registroPlano && precos[indice].minimo_vidas > 1){
-            //         precoEncontrado = precos[indice]
-            //     }
-            // }
-    
-            // if(cliente.idadeBeneficiarios <= 17){
-            //     cliente.preco = precoEncontrado.faixa1
-            // }else if(cliente.idadeBeneficiarios >= 18 && cliente.idadeBeneficiarios <= 40){
-            //     cliente.preco = precoEncontrado.faixa2
-            // }else{
-            //     cliente.preco = precoEncontrado.faixa3
-            // }
-            
         })
         
         var encontrarPreco = jsonBeneficiarios.map((cliente,indice)=>{
@@ -66,16 +47,21 @@ function criarBeneficiarioJson(){
             }
         })
         
-    
-
 
 
 const propostas = [];
 
 
-const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano},{encontrarPreco});
-propostas.push(proposta)
-
+function criarPropostaJson(){
+    let jsonContent2 = JSON.stringify(propostas);
+    fs.writeFile("./src/db/propostas.json", jsonContent2, 'utf8',function(err){
+        if(err){
+        console.log("Error ao tentar escrever o arquivo json");
+            return console.log(err);
+        }
+        console.log("Arquivo Proposta Json Criado com sucesso!");
+    })
+}
 
 console.log(propostas);
 
@@ -87,10 +73,10 @@ function addBeneficiario(beneficiario){
     return beneficiarios.push(beneficiario);
 }
 
-function addProposta(proposta){
-    return propostas.push(proposta);
+function addProposta(){
+    const proposta = Object.assign(jsonBeneficiarios,{encontrarPlano},{encontrarPreco});
+    return propostas.push(proposta)
 }
-
 
 
 module.exports = {
@@ -100,5 +86,6 @@ module.exports = {
     getAllBeneficiarios,
     addBeneficiario,
     criarBeneficiarioJson,
+    criarPropostaJson,
     addProposta
 };

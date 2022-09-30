@@ -2,6 +2,8 @@ const {
     addBeneficiario, 
     getAllBeneficiarios,
     criarBeneficiarioJson,
+    criarPropostaJson,
+    addProposta,
     jsonBeneficiarios } = require('../models/Beneficiarios.model');
 
 
@@ -24,6 +26,8 @@ const httpPostBeneficiario =  (req,res)=>{
 
     addBeneficiario(novoBeneficiario);
     criarBeneficiarioJson();
+    addProposta();
+    criarPropostaJson();
     return res.status(201).json(novoBeneficiario);
 }
 
